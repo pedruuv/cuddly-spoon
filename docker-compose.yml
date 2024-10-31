@@ -39,6 +39,17 @@ services:
     depends_on:
       - kafka
 
+  geolocation:
+    container_name: geolocation-service
+    image: geolocation-service
+    build: ./geolocation_service
+    restart: always
+    environment:
+      - KAFKA_URL=kafka:9092
+    depends_on:
+      - kafka
+
+
   db:
     image: postgres
     container_name: postgresql

@@ -22,16 +22,20 @@ public class Deliver {
     private String clientName;
     private String clientEmail;
     private String clientPhone;
-    private Long distance;
+    private String origin;
+    private String destination;
+    private String currentLocation;
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
 
-    public Deliver(String productName, String clientName, String clientEmail, String clientPhone, Long distance) {
+    public Deliver(String productName, String clientName, String clientEmail, String clientPhone, String origin, String destination, String currentLocation) {
         this.productName = productName;
         this.clientName = clientName;
         this.clientEmail = clientEmail;
         this.clientPhone = clientPhone;
-        this.distance = distance;
+        this.origin = origin;
+        this.destination = destination;
+        this.currentLocation = currentLocation;
         this.status = DeliveryStatus.CREATED;
     }
 }

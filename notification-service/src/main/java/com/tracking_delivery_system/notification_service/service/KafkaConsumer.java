@@ -1,7 +1,6 @@
 package com.tracking_delivery_system.notification_service.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tracking_delivery_system.notification_service.model.LocationUpdate;
 import com.tracking_delivery_system.notification_service.model.StatusUpdate;
@@ -24,8 +23,8 @@ public class KafkaConsumer {
     public void consumeTrackingUpdate(String trackingUpdate) {
         try {
             LocationUpdate locationUpdate = mapper.readValue(trackingUpdate, LocationUpdate.class);
-            String deliveryId = locationUpdate.getId().toString();
-            
+            String deliveryId = locationUpdate.id().toString();
+
             deliveriesMap.computeIfAbsent(deliveryId, id -> new HashMap<>());
             deliveriesMap.get(deliveryId).put("location-update", locationUpdate);
 
@@ -59,8 +58,9 @@ public class KafkaConsumer {
             StatusUpdate statusUpdate = (StatusUpdate) deliveryMap.get("delivery-status");
             String status = statusUpdate.getStatus();
 
-            log.info("Delivery id: {}, Remaining distance: {}, Status: {}", locationUpdate.getId(), locationUpdate.getDistance(), status);
-            
-        }
+            log.info("Delivery id: {}, Current Location: {} - {}, Status: {}", locationUpdate.id(), locationUpdate.currentCity(), locationUpdate.currentState(), status);
+
+            deliveriesMap.remove(deliveryId);
         }
     }
+}

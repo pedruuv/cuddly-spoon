@@ -1,7 +1,8 @@
 package com.tracking_delivery_system.tracking_service.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,9 +14,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "location-update")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationUpdate {
     @Id
     private UUID id;
-    private Long distance;
+    private String currentState;
+    private String currentCity;
+    private double totalDistance;
+    private double remainingDistance;
 }
