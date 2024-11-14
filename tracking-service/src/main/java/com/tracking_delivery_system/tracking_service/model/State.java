@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @Entity
@@ -18,6 +17,5 @@ public class State {
     private String cityName;
     @ManyToOne
     @JoinColumn(name = "delivery_id")
-    @ToString.Exclude
     private Delivery delivery;
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/delivery")
@@ -20,12 +19,8 @@ public class DeliverController {
     private final DeliverService service;
 
     @PostMapping
-    public ResponseEntity<Deliver> newDelivery(@Valid @RequestBody NewDeliverDto newDeliver){
-        try{
-            Deliver deliver = service.createNewDeliver(newDeliver);
-            return ResponseEntity.status(HttpStatus.CREATED).body(deliver);
-        } catch (ResponseStatusException e){
-            throw e;
-        }
+    public ResponseEntity<Deliver> newDelivery(@Valid @RequestBody NewDeliverDto newDeliver) {
+        Deliver deliver = service.createNewDeliver(newDeliver);
+        return ResponseEntity.status(HttpStatus.CREATED).body(deliver);
     }
 }
