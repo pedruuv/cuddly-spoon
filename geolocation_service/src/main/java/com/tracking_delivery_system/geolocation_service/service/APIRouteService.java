@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tracking_delivery_system.geolocation_service.model.Coordinates;
 import com.tracking_delivery_system.geolocation_service.model.State;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -20,6 +21,9 @@ import java.util.Optional;
 public class APIRouteService {
     private final RestTemplate restTemplate;
     private final ObjectMapper mapper;
+
+    @Value("${reverse.geocoding.api.url}")
+    private String reverseGeocodingApiUrl;
 
     public Coordinates fetchCoordinates(String url) {
         try {
@@ -79,7 +83,7 @@ public class APIRouteService {
         List<State> states = new ArrayList<>();
 
         routeCoordinates.forEach(coordinate -> {
-            String url = String.format("https://nominatim.openstreetmap.org/reverse?format=json&lat=%s&lon=%s", coordinate.latitude(), coordinate.longitude());
+            String url = String.format(reverseGeocodingApiUrl, coordinate.latitude(), coordinate.longitude());
             Optional<State> state = fetchStateFromCoordinates(url);
             state.ifPresent(states::add);
         });

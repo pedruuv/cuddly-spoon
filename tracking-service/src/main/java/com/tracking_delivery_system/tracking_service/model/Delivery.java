@@ -21,6 +21,13 @@ public class Delivery {
     @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<State> states;
 
+    public Delivery(UUID id, String origin, String destination, double distance) {
+        this.id = id;
+        this.origin = origin;
+        this.destination = destination;
+        this.distance = distance;
+    }
+
     private void setStates(List<State> states){
         this.states = states;
         states.forEach(state -> state.setDelivery(this));

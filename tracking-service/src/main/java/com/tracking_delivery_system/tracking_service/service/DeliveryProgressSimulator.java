@@ -23,6 +23,9 @@ public class DeliveryProgressSimulator implements DeliveryProgressSimulatorServi
 
     @Override
     public void simulateDeliverProgress(Delivery delivery) {
+        if (delivery.getStates().isEmpty()){
+            throw new IllegalArgumentException("State List can not be empty");
+        }
         UUID id = delivery.getId();
         LocationUpdate locationUpdate = locationUpdateRepository.findById(id)
                 .orElseGet(() -> createNewLocationUpdate(delivery));
